@@ -1,6 +1,9 @@
+import os
 import requests
+from dotenv import load_dotenv
+load_dotenv()
 
-api_key = 'AIzaSyAHdfm1hMGp5eO205B_lkkyIZYmHoGb5Fc'
+api_key = os.getenv("api_key")
 url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent'
 
 
