@@ -1,5 +1,3 @@
-
-
 from fastapi import FastAPI
 from routes import text_gen
 from routes import img_gen
@@ -19,4 +17,4 @@ app.include_router(img_gen.router)
 
 @app.get('/')
 def root():
-    return {'message': True}
+    return {'message': 'success'}
