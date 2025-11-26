@@ -1,0 +1,7 @@
+
+requests
+dotenv
+fastapi
+uvicorn
+numpy
+sounddevice
