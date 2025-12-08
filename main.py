@@ -4,8 +4,10 @@ from routes import img_gen
 from routes import test_gen
 from routes.v1 import img
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+app.mount("/images", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,

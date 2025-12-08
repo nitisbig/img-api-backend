@@ -1,4 +1,5 @@
 import uuid
+import base64
 
 
 from fastapi import APIRouter, Security
@@ -22,10 +23,20 @@ def root(api_key: APIKeyBase = Security(verify)):
 def get_img(p: PromptValidate, api_key: APIKeyBase = Security(verify)):
     b64img = fetch_img(p.prompt+f'size: {p.size}')
     data_uri = f"data:image/png;base64,{b64img}"
+
+
+    file_name = f"{uuid.uuid4()}.png"
+    file_path = f"static/{file_name}"
+
+    with open(file_path, "wb") as fh:
+        fh.write(base64.b64decode(b64img))
+    
+    server_url = "http://127.0.0.1:8000" 
+    full_img_url = f"{server_url}/images/{file_name}"
     data = {
         "data": {
-            "id": unique_id,
-            "imgUrl": data_uri,
+            "id": str(unique_id),
+            "imgUrl": full_img_url,
         }
     }
     return data
