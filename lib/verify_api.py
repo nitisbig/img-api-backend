@@ -38,6 +38,7 @@ def verify(key: str = Security(APIKeyHeader(name='x-key', auto_error=False)), db
         APIKey.token == key,
         APIKey.is_active == True
     ).first()
+    
     db.commit()
 
     if not db_key:
