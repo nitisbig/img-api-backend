@@ -15,9 +15,9 @@ SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
 class APIKey(Base):
-    __tablename__ = 'api_key'
+    __tablename__ = 'apis'
     id = Column(Integer, primary_key=True, index=True)
-    token = Column(String, unique=True, index=True) 
+    api = Column(String, unique=True, index=True) 
     is_active = Column(Boolean, default=True)
 
 def get_db():
@@ -27,7 +27,7 @@ def get_db():
     finally:
         db.close()
 
-def verify(key: str = Security(APIKeyHeader(name='x-key', auto_error=False)), db: Session = Depends(get_db)):
+def verify(key: str = Security(APIKeyHeader(name='x-api-key', auto_error=False)), db: Session = Depends(get_db)):
     if not key:
         raise HTTPException(
             status_code=401,
@@ -35,7 +35,7 @@ def verify(key: str = Security(APIKeyHeader(name='x-key', auto_error=False)), db
         )
     
     db_key = db.query(APIKey).filter(
-        APIKey.token == key,
+        APIKey.api == key,
         APIKey.is_active == True
     ).first()
     
